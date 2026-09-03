@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app import crud, schemas
 from app.database import get_db
+from app.models import MeetingStatus
 
 router = APIRouter(prefix="/meetings", tags=["Заседания"])
 
@@ -13,8 +14,13 @@ def create_meeting(data: schemas.MeetingCreate, db: Session = Depends(get_db)):
 
 
 @router.get("", response_model=list[schemas.MeetingOut])
-def list_meetings(commission_id: int | None = Query(None), db: Session = Depends(get_db)):
-    return crud.list_meetings(db, commission_id)
+def list_meetings(
+    commission_id: int | None = Query(None),
+    status: MeetingStatus | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    """Список заседаний. Поддерживает фильтрацию по комиссии и по статусу."""
+    return crud.list_meetings(db, commission_id, status)
 
 
 @router.get("/{meeting_id}", response_model=schemas.MeetingOut)
