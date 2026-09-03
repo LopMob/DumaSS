@@ -142,10 +142,16 @@ def create_meeting(db: Session, data: schemas.MeetingCreate) -> models.Meeting:
     return meeting
 
 
-def list_meetings(db: Session, commission_id: int | None = None) -> list[models.Meeting]:
+def list_meetings(
+    db: Session,
+    commission_id: int | None = None,
+    status: models.MeetingStatus | None = None,
+) -> list[models.Meeting]:
     stmt = select(models.Meeting)
     if commission_id is not None:
         stmt = stmt.where(models.Meeting.commission_id == commission_id)
+    if status is not None:
+        stmt = stmt.where(models.Meeting.status == status)
     return list(db.scalars(stmt))
 
 

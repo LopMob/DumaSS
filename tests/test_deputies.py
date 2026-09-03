@@ -17,3 +17,8 @@ def test_create_deputy_validation_error(client):
     # full_name короче минимальной длины -> 422
     resp = client.post("/deputies", json={"full_name": "И"})
     assert resp.status_code == 422
+
+
+def test_deputy_attendance_stats_for_unknown_deputy_returns_404(client):
+    resp = client.get("/deputies/9999/attendance-stats")
+    assert resp.status_code == 404
