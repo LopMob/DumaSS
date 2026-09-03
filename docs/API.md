@@ -33,7 +33,7 @@
 | Метод | Путь | Описание |
 |---|---|---|
 | POST | `/meetings` | Создать заседание |
-| GET | `/meetings?commission_id=` | Список заседаний (опционально по комиссии) |
+| GET | `/meetings?commission_id=&status=` | Список заседаний (опционально по комиссии и/или по статусу: `scheduled`\|`held`\|`cancelled`) |
 | GET | `/meetings/{id}` | Получить заседание |
 | PATCH | `/meetings/{id}/status` | Сменить статус (`scheduled`\|`held`\|`cancelled`); перевод в `held` проверяет кворум |
 | POST | `/meetings/{id}/attendance` | Отметить посещаемость депутата |
