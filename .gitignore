@@ -1,0 +1,30 @@
+# Секреты и локальная конфигурация
+.env
+*.env.local
+
+# Локальные базы данных
+*.db
+*.sqlite3
+backups/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Docker
+docker-compose.override.yml
