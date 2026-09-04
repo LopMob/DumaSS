@@ -16,13 +16,13 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
 
-class MeetingStatus(str, enum.Enum):
+class MeetingStatus(enum.StrEnum):
     scheduled = "scheduled"  # запланировано
     held = "held"  # проведено
     cancelled = "cancelled"  # отменено
 
 
-class AttendanceStatus(str, enum.Enum):
+class AttendanceStatus(enum.StrEnum):
     present = "present"  # присутствовал
     absent = "absent"  # отсутствовал
     excused = "excused"  # отсутствовал по уважительной причине

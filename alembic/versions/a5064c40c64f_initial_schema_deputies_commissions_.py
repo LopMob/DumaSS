@@ -1,7 +1,7 @@
 """initial schema: deputies, commissions, memberships, meetings, attendances
 
 Revision ID: a5064c40c64f
-Revises: 
+Revises:
 Create Date: 2026-09-03 19:07:13.813069
 """
 
