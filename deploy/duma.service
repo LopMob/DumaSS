@@ -1,0 +1,31 @@
+[Unit]
+Description=Duma API service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=duma
+Group=duma
+WorkingDirectory=/opt/duma-project
+
+# Настройки — отдельно от кода (пункт 11 задания), файл вне репозитория, права 600.
+EnvironmentFile=/etc/duma/duma.env
+
+ExecStart=/opt/duma-project/.venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Пункт 9: автоматический перезапуск после аварийного завершения.
+Restart=on-failure
+RestartSec=5
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+# Минимально необходимые привилегии — процесс не должен уметь больше, чем ему нужно.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/duma-project
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
