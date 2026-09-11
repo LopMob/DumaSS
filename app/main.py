@@ -50,17 +50,29 @@ def health():
 
 @app.exception_handler(crud.NotFoundError)
 def not_found_handler(request: Request, exc: crud.NotFoundError):
-    return JSONResponse(status_code=404, content={"detail": str(exc)})
+    return JSONResponse(
+        status_code=404,
+        content={"detail": str(exc)},
+        media_type="application/json; charset=utf-8",
+    )
 
 
 @app.exception_handler(crud.ConflictError)
 def conflict_handler(request: Request, exc: crud.ConflictError):
-    return JSONResponse(status_code=409, content={"detail": str(exc)})
+    return JSONResponse(
+        status_code=409,
+        content={"detail": str(exc)},
+        media_type="application/json; charset=utf-8",
+    )
 
 
 @app.exception_handler(crud.QuorumError)
 def quorum_handler(request: Request, exc: crud.QuorumError):
-    return JSONResponse(status_code=409, content={"detail": str(exc)})
+    return JSONResponse(
+        status_code=409,
+        content={"detail": str(exc)},
+        media_type="application/json; charset=utf-8",
+    )
 
 
 @app.exception_handler(RequestValidationError)
@@ -69,4 +81,5 @@ def validation_handler(request: Request, exc: RequestValidationError):
     return JSONResponse(
         status_code=422,
         content={"detail": "Некорректные данные запроса", "errors": exc.errors()},
+        media_type="application/json; charset=utf-8",
     )
