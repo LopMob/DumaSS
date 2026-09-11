@@ -1,5 +1,6 @@
 fastapi==0.141.1
 uvicorn[standard]==0.52.4
+aiofiles==24.1.0
 SQLAlchemy==2.0.52
 alembic==1.19.1
 pydantic==2.13.5

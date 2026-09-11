@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from app import crud
 from app.config import get_settings
@@ -22,6 +23,14 @@ Base.metadata.create_all(bind=engine)
 app.include_router(deputies.router)
 app.include_router(commissions.router)
 app.include_router(meetings.router)
+
+# Лёгкий веб-интерфейс поверх API (не часть требований API, для удобства просмотра данных).
+app.mount("/ui", StaticFiles(directory="static", html=True), name="ui")
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/ui/")
 
 
 @app.get("/health", tags=["Служебное"])
