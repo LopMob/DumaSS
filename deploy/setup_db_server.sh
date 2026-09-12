@@ -4,7 +4,7 @@ set -euo pipefail
 
 DB_NAME="duma"
 DB_USER="duma_app"
-APP_SERVER_IP="192.168.56.10"   # адрес app-server в host-only сети — поменяйте под свою схему
+APP_SERVER_IP="192.168.56.11"   # адрес app-server в host-only сети — поменяйте под свою схему
 
 echo "== 1. Установка PostgreSQL =="
 sudo apt-get update -y
@@ -33,7 +33,7 @@ PG_CONF="/etc/postgresql/${PG_VERSION}/main/postgresql.conf"
 sudo cp "$PG_HBA" "${PG_HBA}.bak"
 echo "host    ${DB_NAME}    ${DB_USER}    ${APP_SERVER_IP}/32    scram-sha-256" | sudo tee -a "$PG_HBA"
 
-sudo sed -i "s/^#listen_addresses.*/listen_addresses = '192.168.56.11'/" "$PG_CONF"
+sudo sed -i "s/^#listen_addresses.*/listen_addresses = '192.168.56.10'/" "$PG_CONF"
 
 sudo systemctl restart postgresql
 echo "PostgreSQL перезапущен. Проверьте: sudo -u postgres psql -c '\\du' и '\\l'"

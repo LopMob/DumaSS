@@ -1,7 +1,7 @@
 # Развёртывание в Linux-среде (ЛР2)
 
 Две виртуальные машины в VirtualBox (Ubuntu Server), без контейнеров:
-`app-server` (192.168.56.10) — приложение, `db-server` (192.168.56.11) — PostgreSQL.
+`app-server` (192.168.56.11) — приложение, `db-server` (192.168.56.10) — PostgreSQL.
 
 ## 1–2. Машины, сеть, статическая адресация, SSH по ключам
 
@@ -13,10 +13,10 @@
 **SSH-ключ** генерируется **на хосте** (не на VM):
 ```bash
 ssh-keygen -t ed25519 -C "admin@duma-lab"
-ssh-copy-id admin@192.168.56.10
 ssh-copy-id admin@192.168.56.11
+ssh-copy-id admin@192.168.56.10
 ```
-После этого проверьте вход без пароля: `ssh admin@192.168.56.10`.
+После этого проверьте вход без пароля: `ssh admin@192.168.56.11`.
 
 ## 3. Запрет root по SSH, отдельные пользователи
 
@@ -117,8 +117,8 @@ sudo systemctl disable duma
 
 ## Проверка на защите — что показать и какими командами
 
-- **Перезагрузка + автозапуск**: `sudo reboot`, после — `systemctl status duma` (`active (running)`), `curl http://192.168.56.10:8000/health` с хоста.
+- **Перезагрузка + автозапуск**: `sudo reboot`, после — `systemctl status duma` (`active (running)`), `curl http://192.168.56.11:8000/health` с хоста.
 - **Остановка БД, диагностика приложения**: на db-server `sudo systemctl stop postgresql`; на app-server `curl .../health` → `"database":"unavailable"`; `journalctl -u duma -n 50`.
 - **Поиск процесса/порта/журналов**: `systemctl status duma`, `sudo ss -tlnp | grep 8000`, `journalctl -u duma -f`.
 - **Изменение параметра и восстановление**: например, поменять `RestartSec` в `duma.service`, `sudo systemctl daemon-reload && systemctl restart duma`, показать эффект, затем вернуть исходное значение тем же путём.
-- **Недоступность БД снаружи**: с хост-машины (не app-server) `telnet 192.168.56.11 5432` или `nc -zv 192.168.56.11 5432` — должно быть отказано/таймаут.
+- **Недоступность БД снаружи**: с хост-машины (не app-server) `telnet 192.168.56.10 5432` или `nc -zv 192.168.56.10 5432` — должно быть отказано/таймаут.

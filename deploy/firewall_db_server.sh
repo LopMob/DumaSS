@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ADMIN_SUBNET="192.168.56.0/24"
-APP_SERVER_IP="192.168.56.10"    # только этому IP разрешено ходить на 5432
+APP_SERVER_IP="192.168.56.11"    # только этому IP разрешено ходить на 5432
 
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
