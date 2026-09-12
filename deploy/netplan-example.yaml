@@ -7,6 +7,7 @@
 
 network:
   version: 2
+  renderer: NetworkManager   # на Ubuntu Desktop сетью управляет NetworkManager, не systemd-networkd
   ethernets:
     enp0s8:                # <-- замените на реальное имя интерфейса (ip link show)
       addresses:
